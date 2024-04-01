@@ -14,6 +14,8 @@ workflow.
     dotenvMe: ${{ secrets.DOTENV_ME }}
     stage: "ci"
     move: true
+- name: Your next step
+  run: source .env && echo $MY_ENV_VAR
 ```
 
 ## Inputs
