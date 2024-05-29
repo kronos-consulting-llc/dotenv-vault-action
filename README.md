@@ -8,31 +8,34 @@ workflow.
 ## Usage
 
 ```yaml
-- name: Download .env file
-  uses: zdeneklapes/dotenv-vault-action@v1
+- name: Download .env.production file and delete it after the workflow is finished
+  uses: zdeneklapes/dotenv-vault-action@v2
+  with:
+    dotenvMe: ${{ secrets.DOTENV_ME }}
+    stage: "production"
+    delete: "true"
+- name: Download .env.ci file and keep it after the workflow is finished
+  uses: zdeneklapes/dotenv-vault-action@v2
   with:
     dotenvMe: ${{ secrets.DOTENV_ME }}
     stage: "ci"
-    move: true
+    delete: "false"
 - name: Your next step
-  run: source .env && echo $MY_ENV_VAR
+  run: source .env.ci && echo $SOME_ENV_VAR_IN_CI
+- name: Your next step
+  run: source .env.production && echo $SOME_ENV_VAR_IN_PRODUCTION
 ```
 
 ## Inputs
 
 ### `dotenvMe` (required)
-
 - **Description**: The `dotenvMe` secret from [dotenv-vault](https://www.dotenv.org/).
 
 ### `stage` (optional, default: 'ci')
-
 The stage of the `.env` file you want to download.
 
 **Examples**: `ci`/`staging`/`production`/`development` or any other stage you have set up in dotenv-vault.
 
-### `move` (optional, default: true)
+### `delete` (optional, default: true)
 
-If set to `true`, the `.env.${STAGE}`will be renamed to `.env`.
-
-## POST-Action
-Remove the '.env*' files from the runner after the workflow is finished.
+- **Description**: If set to `false`, then all `.env*` files will be kept after the workflow is finished. By default, all `.env*` files are removed.
