@@ -14,6 +14,7 @@ workflow.
     dotenvMe: ${{ secrets.DOTENV_ME }}
     stage: "production"
     delete: "true"
+    directory: './output'
 - name: Download .env.ci file and keep it after the workflow is finished
   uses: zdeneklapes/dotenv-vault-action@v2
   with:
@@ -39,3 +40,7 @@ The stage of the `.env` file you want to download.
 ### `delete` (optional, default: true)
 
 - **Description**: If set to `false`, then all `.env*` files will be kept after the workflow is finished. By default, all `.env*` files are removed.
+
+### `directory` (optional, default: '.')
+
+- **Description**: If set to a directory, then all `.env*` files will be downloaded to said directory
