@@ -14,6 +14,10 @@ inputs:
     description: "Delete .env files after dotenv-vault pull"
     required: false
     default: "true"
+  directory:
+    description: "Directory to download .env from dotenv-vault"
+    required: false
+    default: "."
 
 runs:
   using: "composite"
@@ -22,6 +26,7 @@ runs:
       with:
         node-version: '18'
     - run: npx -y dotenv-vault@latest pull ${{ inputs.stage }} --dotenvMe=${{ inputs.dotenvMe }} --yes
+      working-directory: ${{ inputs.directory }}
       shell: bash
     - uses: webiny/action-post-run@3.1.0
       if: ${{ inputs.delete == 'true' }}
