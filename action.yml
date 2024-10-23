@@ -1,7 +1,7 @@
 ---
-name: "Dotenv-vault action"
+name: "Dotenv-vault action to directory"
 description: "Download '.env.$ENVIRONMENT' from dotenv.org (dotenv-vault)."
-author: "Zdenek Lapes"
+author: "Zdenek Lapes, Khanh Nguyen"
 inputs:
   stage:
     description: "Stage to download .env from dotenv-vault"
